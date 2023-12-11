@@ -1,67 +1,37 @@
 const express = require("express");
 const handlebars = require("express-handlebars");
 const path = require("path");
-const app = express();
+const mongoose = require("mongoose");
 
 const { PORT, DB_URL } = require("./constants");
-const { default: mongoose } = require("mongoose");
+const routes = require("./router");
 
-//Express Config
+//App init
+const app = express();
 
+// Express Configurations
 app.use(express.static(path.resolve(__dirname, "./public")));
+app.use(express.urlencoded({ extended: false }));
 
-//Handlebars Config
+// Configure Handlebars
 app.engine("hbs", handlebars.engine({ extname: "hbs" }));
 app.set("view engine", "hbs");
 app.set("views", "src/views");
 
-//Home page router
-
-app.get("/", (req, res) => {
-  res.render("home");
-});
-
-//Database config
-
+//Database Connection
 async function dbConnect() {
   await mongoose.connect(DB_URL);
 }
 
 dbConnect()
   .then(() => {
-    console.log("Uspeshno se vurzahme za bazata s danni!");
+    console.log(`Uspeshno se vurzahme kum bazata s danni`);
   })
-  .catch((err) => console.log(`Error while connecting to the DB. ${err}`));
+  .catch((err) => console.log(`Error while connecting to the database. Error: ${err}`));
 
-//Other Routes
-
-app.get("/users/login", (req, res) => {
-  res.render("users/login");
-});
-
-app.get("/users/register", (req, res) => {
-  res.render("users/register");
-});
-
-app.get("/posts/catalog", (req, res) => {
-  res.render("posts/catalog");
-});
-
-app.get("/posts/create", (req, res) => {
-  res.render("posts/create");
-});
-
-app.get("/posts/details", (req, res) => {
-  res.render("posts/details");
-});
-
-app.get("/posts/edit", (req, res) => {
-  res.render("posts/edit");
-});
-app.get("/posts/search", (req, res) => {
-  res.render("posts/search");
-});
+//Routes
+app.use(routes);
 
 app.listen(PORT, () => {
-  console.log(`App listening on port ${PORT}`);
+  console.log(`Server is listening on port: ${PORT} ...`);
 });
