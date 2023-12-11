@@ -6,11 +6,11 @@ const port = 3000;
 
 //Express Config
 
-app.use(express(path.resolve(__dirname, "./public")));
+app.use(express.static(path.resolve(__dirname, "./public")));
 
 //Handlebars Config
 app.engine("hbs", handlebars.engine({ extname: "hbs" }));
-app.set("view engine", hbs);
+app.set("view engine", "hbs");
 app.set("views", "src/views");
 
 app.get("/", (req, res) => {
