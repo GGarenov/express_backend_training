@@ -8,11 +8,11 @@ router.get("/register", (req, res) => {
 
 router.post("/register", async (req, res) => {
   const { email, username, password, repassword } = req.body;
-
   try {
-    await userService.register({ email, username, password, repassword });
-
-    res.redirect("/users/login");
+    const token = await userService.register({ email, username, password, repassword });
+    await userService.login(email, password);
+    res.cookie("token", token, { httpOnly: true });
+    res.redirect("/");
   } catch (error) {
     const errorMessages = extractErrorMsgs(error);
     res.status(404).render("users/register", { errorMessages });
