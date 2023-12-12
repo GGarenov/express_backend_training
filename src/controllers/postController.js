@@ -73,4 +73,11 @@ router.post("/:postId/edit", async (req, res) => {
   res.redirect(`/posts/${postId}/details`);
 });
 
+router.get("/:postId/delete", async (req, res) => {
+  const { postId } = req.params;
+
+  await postService.delete(postId);
+  res.redirect("/posts/catalog");
+});
+
 module.exports = router;

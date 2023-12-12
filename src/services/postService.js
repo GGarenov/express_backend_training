@@ -7,3 +7,5 @@ exports.getAll = () => Post.find();
 exports.singlePost = (postId) => Post.findById(postId);
 
 exports.update = (postId, postData) => Post.findByIdAndUpdate(postId, postData);
+
+exports.delete = (postId) => Post.findByIdAndDelete(postId);
