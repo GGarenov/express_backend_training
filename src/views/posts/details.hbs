@@ -17,18 +17,20 @@
             {{#if isAuthenticated}}
             {{#unless isOwner}}
             <!-- If user is not the owner of the toy post -->
-            <a href="#" class="buy-btn">Buy</a>
+            {{#unless hasBought}}
+            <a href="/posts/{{post._id}}/buy" class="buy-btn">Buy</a>
+            {{/unless}}
             {{/unless}}
             {{#if isOwner}}
             <!-- If user is owner -->
             <a href="/posts/{{post._id}}/edit" class="edit-btn">Edit</a>
             <a href="/posts/{{post._id}}/delete" class="delete-btn">Delete</a>
             {{/if}}
-            <!-- If user is not the owner and has bought this toy -->
+            {{#if hasBought}}
+            <!-- If user has bought this toy -->
             <p><span class="buy">Thank You For Your Purchase</span></p>
             {{/if}}
+            {{/if}}
         </div>
-
-
     </div>
 </section>

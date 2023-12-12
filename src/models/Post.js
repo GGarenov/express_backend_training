@@ -34,10 +34,12 @@ const postSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  buyingList: {
-    type: Array,
-    required: true,
-  },
+  buyingList: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   owner: {
     type: mongoose.Types.ObjectId,
     ref: "User",
