@@ -47,4 +47,30 @@ router.get("/:postId/details", async (req, res) => {
   res.render("posts/details", { post, isOwner });
 });
 
+router.get("/:postId/edit", async (req, res) => {
+  const { postId } = req.params;
+
+  const post = await postService.singlePost(postId).lean();
+  res.render("posts/edit", { post });
+});
+
+router.post("/:postId/edit", async (req, res) => {
+  const { postId } = req.params;
+  const { name, type, damages, image, description, production, exploitation, price } = req.body;
+  const payload = {
+    name,
+    type,
+    damages,
+    image,
+    description,
+    production,
+    exploitation,
+    price,
+    owner: req.user,
+  };
+
+  await postService.update(postId, payload);
+  res.redirect(`/posts/${postId}/details`);
+});
+
 module.exports = router;

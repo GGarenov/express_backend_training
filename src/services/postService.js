@@ -5,3 +5,5 @@ exports.create = (postData) => Post.create(postData);
 exports.getAll = () => Post.find();
 
 exports.singlePost = (postId) => Post.findById(postId);
+
+exports.update = (postId, postData) => Post.findByIdAndUpdate(postId, postData);

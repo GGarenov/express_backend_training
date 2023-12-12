@@ -19,7 +19,7 @@
             <a href="#" class="buy-btn">Buy</a>
             {{#if isOwner}}
             <!--If user is owner-->
-            <a href="#" class="edit-btn">Edit</a>
+            <a href="/posts/{{post._id}}/edit" class="edit-btn">Edit</a>
             <a href="#" class="delete-btn">Delete</a>
             {{/if}}
             <!--If user is not the owner and is bought this toy-->
