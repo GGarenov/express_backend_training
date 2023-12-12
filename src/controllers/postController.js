@@ -11,4 +11,28 @@ router.get("/create", isAuth, (req, res) => {
   res.render("posts/create");
 });
 
+router.post("/create", async (req, res) => {
+  const { name, type, damages, image, description, production, exploitation, price } = req.body;
+
+  const payload = {
+    name,
+    type,
+    damages,
+    image,
+    description,
+    production,
+    exploitation,
+    price,
+    owner: req.user,
+  };
+
+  try {
+    await postService.create(payload);
+    res.redirect("/posts/catalog");
+  } catch (error) {
+    const errorMessages = extractErrorMsgs(error);
+    res.status(404).render("post/create", { errorMessages });
+  }
+});
+
 module.exports = router;
