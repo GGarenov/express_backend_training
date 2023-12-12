@@ -4,7 +4,8 @@ const { isAuth } = require("../middlewares/authMiddleware");
 const { extractErrorMsgs } = require("../utils/errorHandler");
 
 router.get("/catalog", async (req, res) => {
-  res.render("posts/catalog");
+  const posts = await postService.getAll().lean();
+  res.render("posts/catalog", { posts });
 });
 
 router.get("/create", isAuth, (req, res) => {
