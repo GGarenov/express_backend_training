@@ -92,4 +92,16 @@ router.get("/:postId/buy", async (req, res) => {
   res.redirect(`/posts/${postId}/details`);
 });
 
+router.get("/search", async (req, res) => {
+  const { searchName, searchType } = req.query;
+
+  try {
+    const posts = await postService.search({ name: searchName, type: searchType });
+    res.render("posts/search", { posts });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 module.exports = router;

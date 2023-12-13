@@ -21,3 +21,18 @@ exports.addBuyToPost = async (postId, userId) => {
   post.buyingList.push(userId);
   return post.save();
 };
+
+exports.search = async (searchParams) => {
+  const { name, type } = searchParams;
+  const query = {};
+
+  if (name) {
+    query.name = { $regex: new RegExp(name, "i") };
+  }
+
+  if (type) {
+    query.type = { $regex: new RegExp(type, "i") };
+  }
+
+  return Post.find(query).lean();
+};
